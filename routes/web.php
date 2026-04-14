@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Jobs\LogInfoJob;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    LogInfoJob::dispatch()->onQueue('Info_Queue');
     return view('welcome');
 });
 
@@ -17,4 +19,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
